@@ -1,0 +1,312 @@
+$blue: #0d6efd;
+$dark: #202327;
+$green: #198754;
+$cyan: #11bfdc;
+$border: #dee2e6;
+$muted: #6c757d;
+$surface: #ffffff;
+$page: #f5f6f8;
+$danger: #dc3545;
+
+// Base reset shared by all pages.
+* {
+  box-sizing: border-box;
+}
+
+// Main page background and default typography.
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: $page;
+  color: #212529;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  color: inherit;
+}
+
+// Dark header used on the logistics panel.
+.topbar {
+  background: $dark;
+  border-top: 8px solid #0a58ca;
+  color: #f8f9fa;
+}
+
+.topbar-inner {
+  width: min(1150px, calc(100% - 32px));
+  margin: 0 auto;
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  font-weight: 500;
+}
+
+.topbar nav {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.95rem;
+}
+
+.topbar nav a {
+  color: #f8f9fa;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+// Two-column layout that matches the reference screenshot.
+.layout {
+  width: min(1150px, calc(100% - 32px));
+  margin: 34px auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(320px, 1.05fr);
+  gap: 34px;
+  align-items: start;
+}
+
+.panel-card,
+.auth-card {
+  background: $surface;
+  border: 1px solid $border;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+// Card headers use different colors for form and result sections.
+.panel-card h2 {
+  margin: 0;
+  padding: 18px 22px;
+  color: #fff;
+  font-size: 1.35rem;
+  font-weight: 500;
+}
+
+.route-card h2 {
+  background: $blue;
+}
+
+.result-card h2 {
+  background: $dark;
+}
+
+// Shared spacing for the route form and the result body.
+.route-form,
+.result-body {
+  padding: 26px 22px 22px;
+}
+
+.route-form,
+.form-stack {
+  display: grid;
+  gap: 22px;
+}
+
+// The swap button and submit button stay aligned as one action row.
+.route-actions {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+}
+
+.swap-button {
+  min-width: 52px;
+  background: #495057;
+  font-size: 1.35rem;
+  padding: 0;
+}
+
+// Form controls are kept large because this is the main workflow.
+label {
+  display: grid;
+  gap: 12px;
+  font-size: 1.35rem;
+  font-weight: 400;
+}
+
+select,
+input {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid $border;
+  border-radius: 7px;
+  background: #fff;
+  color: #343a40;
+  font: inherit;
+  padding: 0 16px;
+}
+
+button,
+.link-button {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 6px;
+  background: $green;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.18rem;
+  font-weight: 700;
+  padding: 0 22px;
+  text-decoration: none;
+}
+
+// Result summary styles.
+.distance {
+  margin: 0;
+  color: #168052;
+  font-size: 1.85rem;
+  font-weight: 700;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ced4da;
+  margin: 20px 0 24px;
+}
+
+.result-body h3 {
+  margin: 0 0 14px;
+  font-size: 1.6rem;
+}
+
+.route-path {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route-path li {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.route-path span {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  border-radius: 6px;
+  background: $cyan;
+  color: #12313a;
+  font-weight: 700;
+  padding: 0 13px;
+}
+
+.route-path b {
+  color: #212529;
+  font-size: 1.2rem;
+}
+
+.empty-state,
+.helper-text {
+  color: $muted;
+  line-height: 1.5;
+}
+
+// Login and registration pages.
+.auth-page {
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+  background: linear-gradient(180deg, #eaf3ff 0%, #f7f8fa 44%);
+}
+
+.auth-shell {
+  width: min(440px, 100%);
+}
+
+.auth-card {
+  padding: 30px;
+}
+
+.auth-card h1 {
+  margin: 8px 0 22px;
+  color: $dark;
+  font-size: 1.8rem;
+}
+
+.eyebrow {
+  color: $blue;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.auth-card label {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.alert {
+  border-radius: 6px;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  line-height: 1.45;
+}
+
+.alert-error {
+  background: #f8d7da;
+  color: #842029;
+}
+
+.alert-success {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.text-link {
+  display: inline-flex;
+  margin-top: 18px;
+  color: $blue;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+// Mobile layout stacks the cards to avoid cramped columns.
+@media (max-width: 760px) {
+  .topbar-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    padding: 18px 0;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .route-actions {
+    grid-template-columns: 1fr;
+  }
+
+  label {
+    font-size: 1.08rem;
+  }
+
+  .distance {
+    font-size: 1.45rem;
+  }
+
+  .result-body h3 {
+    font-size: 1.3rem;
+  }
+}

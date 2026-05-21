@@ -1,0 +1,19 @@
+{
+  "name": "sistema-de-logistica",
+  "version": "1.0.0",
+  "description": "Aplicacion PHP para calcular rutas cortas entre ciudades de Guatemala usando grafos.",
+  "scripts": {
+    "build": "npm run build:vendor && npm run build:css",
+    "build:vendor": "node scripts/copy-assets.js",
+    "build:css": "sass --load-path=node_modules assets/scss/main.scss public/css/main.css --style=expanded",
+    "watch:css": "sass --load-path=node_modules assets/scss/main.scss public/css/main.css --watch",
+    "serve": "php -S localhost:8000"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.3"
+  },
+  "devDependencies": {
+    "sass": "^1.77.8"
+  }
+}

@@ -1,0 +1,16 @@
+# Dependencias instaladas por npm
+node_modules/
+
+# Variables locales
+.env
+
+# Logs y archivos generados
+*.log
+.DS_Store
+dist/*.map
+
+# Base de datos SQLite local
+database/*.sqlite
+database/*.sqlite-*
+database/*.db
+database/*.db-*
