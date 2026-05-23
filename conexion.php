@@ -61,30 +61,7 @@ function buscar_usuario(string $usuario): ?array
     return $fila === false ? null : $fila;
 }
 
-function crear_usuario(string $nombre, string $usuario, string $clave): array
+function e(string $valor): string
 {
-    preparar_base_datos();
-
-    if ($nombre === '' || $usuario === '' || $clave === '') {
-        return [false, 'Todos los campos son obligatorios.'];
-    }
-
-    if (strlen($clave) < 6) {
-        return [false, 'La clave debe tener al menos 6 caracteres.'];
-    }
-
-    $hash = password_hash($clave, PASSWORD_DEFAULT);
-
-    try {
-        $stmt = conexion()->prepare('INSERT INTO usuarios (nombre, usuario, password_hash) VALUES (?, ?, ?)');
-        $stmt->execute([$nombre, $usuario, $hash]);
-    } catch (PDOException $exception) {
-        if ($exception->getCode() === '23000') {
-            return [false, 'Ese usuario ya existe.'];
-        }
-
-        throw $exception;
-    }
-
-    return [true, 'Usuario creado correctamente. Ya puedes iniciar sesion.'];
+    return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
 }
