@@ -39,14 +39,15 @@ admin / admin123
 ```
 
 La base de datos SQLite se prepara automaticamente al abrir `index.php`.
+Tambien puedes crear nuevos usuarios desde el enlace `Crear una cuenta` en la pantalla de login.
 
 ## Estructura principal
 
 El proyecto queda explicado con cuatro archivos PHP principales:
 
 - `index.php`: muestra el login cuando no hay sesion y muestra el panel de rutas cuando el usuario ya ingreso.
-- `validarlogin.php`: recibe el formulario por POST, valida usuario/clave y crea la sesion.
-- `conexion.php`: abre la conexion PDO SQLite, crea la tabla `usuarios` y prepara el usuario inicial.
+- `validarlogin.php`: recibe formularios por POST, registra usuarios, valida usuario/clave y crea la sesion.
+- `conexion.php`: abre la conexion PDO SQLite, crea la tabla `usuarios`, prepara el usuario inicial y guarda claves con hash.
 - `graph.php`: contiene el grafo de departamentos, las distancias y el algoritmo de Dijkstra.
 
 ## Flujo

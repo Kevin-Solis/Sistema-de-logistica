@@ -16,6 +16,9 @@ if (($_GET['accion'] ?? '') === 'salir') {
 
 $usuarioActual = $_SESSION['usuario'] ?? null;
 $errorLogin = ($_GET['error'] ?? '') === '1';
+$mostrarRegistro = ($_GET['registro'] ?? '') === '1';
+$registroOk = ($_GET['registro_ok'] ?? '') === '1';
+$registroError = $_GET['registro_error'] ?? '';
 $ciudades = cities();
 $origen = $_POST['origin'] ?? 'Guatemala';
 $destino = $_POST['destination'] ?? 'Sacatepequez';
@@ -43,12 +46,37 @@ if ($usuarioActual !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="auth-page">
     <main class="auth-shell">
         <section class="auth-card">
-            <span class="eyebrow">Acceso seguro</span>
-            <h1><?= e(APP_NAME) ?></h1>
-            <?php if ($errorLogin): ?>
+            <h1><?= $mostrarRegistro ? 'Crear cuenta' : e(APP_NAME) ?></h1>
+            <?php if ($errorLogin && !$mostrarRegistro): ?>
                 <p class="alert alert-error">Usuario o clave incorrectos.</p>
             <?php endif; ?>
+            <?php if ($registroOk && !$mostrarRegistro): ?>
+                <p class="alert alert-success">Usuario creado correctamente. Ya puedes iniciar sesion.</p>
+            <?php endif; ?>
+            <?php if ($registroError !== '' && $mostrarRegistro): ?>
+                <p class="alert alert-error"><?= e($registroError) ?></p>
+            <?php endif; ?>
+            <?php if ($mostrarRegistro): ?>
             <form method="post" action="validarlogin.php" class="form-stack">
+                <input type="hidden" name="accion" value="registrar">
+                <label>
+                    Nombre
+                    <input class="form-control" type="text" name="nombre" autocomplete="name" required>
+                </label>
+                <label>
+                    Usuario
+                    <input class="form-control" type="text" name="usuario" autocomplete="username" required>
+                </label>
+                <label>
+                    Clave
+                    <input class="form-control" type="password" name="clave" autocomplete="new-password" minlength="6" required>
+                </label>
+                <button type="submit">Crear usuario</button>
+            </form>
+            <a class="text-link" href="index.php">Volver al login</a>
+            <?php else: ?>
+            <form method="post" action="validarlogin.php" class="form-stack">
+                <input type="hidden" name="accion" value="login">
                 <label>
                     Usuario
                     <input class="form-control" type="text" name="usuario" autocomplete="username" required>
@@ -60,6 +88,8 @@ if ($usuarioActual !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit">Ingresar</button>
             </form>
             <p class="helper-text">Usuario inicial: admin / admin123</p>
+            <a class="text-link" href="index.php?registro=1">Crear una cuenta</a>
+            <?php endif; ?>
         </section>
     </main>
     <script src="public/vendor/bootstrap/bootstrap.bundle.min.js"></script>
