@@ -1,6 +1,6 @@
 # Sistema-de-logistica
 
-Aplicacion web en PHP estructural para calcular la ruta mas corta entre departamentos de Guatemala usando teoria de grafos. Incluye acceso seguro con `password_hash` / `password_verify`, base de datos SQLite y estilos escritos en SCSS.
+Aplicacion web en PHP estructural para calcular la ruta mas corta entre departamentos de Guatemala usando teoria de grafos y el algoritmo de Dijkstra.
 
 ## Requisitos
 
@@ -12,18 +12,6 @@ Aplicacion web en PHP estructural para calcular la ruta mas corta entre departam
 ```bash
 npm install
 npm run build
-```
-
-Inicializa la base de datos SQLite, la tabla de usuarios y el usuario de prueba abriendo:
-
-```text
-http://localhost:8000/init-db.php
-```
-
-Usuario inicial:
-
-```text
-admin / admin123
 ```
 
 ## Ejecutar
@@ -38,37 +26,46 @@ Luego abre:
 http://localhost:8000
 ```
 
-## Hashing de contrasenas
-
-El sistema no guarda contrasenas en texto plano. Cuando un usuario se registra, `auth.php` usa:
-
-```php
-password_hash($password, PASSWORD_DEFAULT)
-```
-
-Para validar el login usa:
-
-```php
-password_verify($password, $user['password_hash'])
-```
-
-Tambien se incluye un archivo documentado para generar hashes manualmente desde terminal:
+Si ese puerto ya esta ocupado, puedes usar otro:
 
 ```bash
-php hash_password.php "admin123"
+php -S localhost:8001
 ```
 
-El resultado se puede guardar en la columna `usuarios.password_hash`.
+Usuario inicial:
 
-## Estructura
+```text
+admin / admin123
+```
 
-- `panel.php`: formulario y resultado de la ruta mas corta.
-- `graph.php`: grafo local de departamentos y algoritmo de Dijkstra. No usa API.
-- `auth.php`: login, registro, cierre de sesion y hashing.
-- `hash_password.php`: generador documentado de hashes seguros.
-- `database.php`: conexion PDO SQLite y preparacion de usuarios.
-- `database/schema.sql`: estructura de la tabla `usuarios` para SQLite.
-- `assets/scss/main.scss`: estilos fuente.
-- `public/js/app.js`: interacciones del formulario.
-- `public/css/main.css`: CSS compilado para usar sin compilar en produccion.
-- `scripts/copy-assets.js`: copia Bootstrap desde `node_modules` a `public/vendor`.
+La base de datos SQLite se prepara automaticamente al abrir `index.php`.
+
+## Estructura principal
+
+El proyecto queda explicado con cuatro archivos PHP principales:
+
+- `index.php`: muestra el login cuando no hay sesion y muestra el panel de rutas cuando el usuario ya ingreso.
+- `validarlogin.php`: recibe el formulario por POST, valida usuario/clave y crea la sesion.
+- `conexion.php`: abre la conexion PDO SQLite, crea la tabla `usuarios` y prepara el usuario inicial.
+- `graph.php`: contiene el grafo de departamentos, las distancias y el algoritmo de Dijkstra.
+
+## Flujo
+
+```text
+index.php
+  -> formulario POST a validarlogin.php
+  -> validarlogin.php consulta conexion.php
+  -> si el login es correcto vuelve a index.php
+  -> index.php llama graph.php para calcular la ruta mas corta
+```
+
+## Seguridad
+
+El sistema no guarda claves en texto plano. El usuario inicial y cualquier validacion usan:
+
+```php
+password_hash($clave, PASSWORD_DEFAULT)
+password_verify($clave, $hashGuardado)
+```
+
+Tambien se usa `session_regenerate_id(true)` al iniciar sesion para reducir riesgo de fijacion de sesion.
