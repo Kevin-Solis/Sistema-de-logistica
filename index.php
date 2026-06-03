@@ -93,6 +93,7 @@ if ($usuarioActual !== null && $_SERVER['REQUEST_METHOD'] === 'POST') {
         </section>
     </main>
     <script src="public/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="public/js/app.js"></script>
 </body>
 <?php else: ?>
 <body>

@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   forms.forEach((form) => {
-    form.addEventListener('submit', () => {
-      if (form.checkValidity()) {
+    form.addEventListener('submit', (event) => {
+      if (!event.defaultPrevented && form.checkValidity()) {
         showLoader();
       }
     });
